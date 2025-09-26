@@ -14,7 +14,7 @@ class AHPBackend:
 
 
     def reset_all_data(self):
-        """Сброс всех данных для нового расчета"""
+        # Сброс всех данных для нового расчета
         self.alternatives: List[str] = []
         self.criteria: List[str] = []
         self.criteria_types: Dict[str, List[str]] = {}
@@ -24,7 +24,7 @@ class AHPBackend:
 
 
     def add_alternative(self, name: str) -> bool:
-        """Добавляет альтернативу"""
+        # Добавляет альтернативу
         name = name.strip()
         if name and name not in self.alternatives:
             self.alternatives.append(name)
@@ -33,7 +33,7 @@ class AHPBackend:
 
 
     def add_criterion(self, name: str) -> bool:
-        """Добавляет критерий"""
+        # Добавляет критерий
         name = name.strip()
         if name and name not in self.criteria:
             self.criteria.append(name)
@@ -66,7 +66,7 @@ class AHPBackend:
             return False
 
     def build_matrix(self, items: List[str], comparisons: Dict[Tuple[int, int], str]) -> Optional[np.ndarray]:
-        """Строит матрицу парных сравнений"""
+        # Строит матрицу парных сравнений
         n = len(items)
         if n == 0:
             return None
@@ -91,7 +91,7 @@ class AHPBackend:
 
 
     def calculate_priority_vector(self, matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Вычисляет главный вектор и вектор приоритетов"""
+        # Вычисляет главный вектор и вектор приоритетов
         n = matrix.shape[0]
         CB = np.array([np.prod(matrix[i, :]) ** (1 / n) for i in range(n)])
         w = CB / np.sum(CB)
@@ -99,7 +99,7 @@ class AHPBackend:
 
     def calculate_ahp(self, selected_levels: int = 3) -> Dict[
         str, Union[Dict[str, np.ndarray], Dict[str, Dict[str, float]], List[str]]]:
-        """Основной метод расчета МАИ с учетом уровней иерархии"""
+        # Основной метод расчета МАИ с учетом уровней иерархии
         results = {
             'priorities': {},
             'consistency': {},
@@ -226,7 +226,7 @@ class AHPBackend:
 
 
     def check_consistency(self, matrix: np.ndarray) -> Dict[str, float]:
-        """Проверка согласованности матрицы"""
+        # Проверка согласованности матрицы
         n = matrix.shape[0]
         if n <= 2:
             return {
